@@ -1,4 +1,4 @@
-package cn.huangzijian888.chatroomserver.service;
+package com.ubuntu.chatroomserver.service;
 
 import org.springframework.stereotype.Service;
 

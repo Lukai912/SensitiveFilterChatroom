@@ -1,4 +1,4 @@
-package cn.huangzijian888.chatroomserver.config;
+package com.ubuntu.chatroomserver.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -7,7 +7,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 /**
- * @author huangzijian888
+ * @author luowendong
  */
 @Configuration
 @EnableWebSocketMessageBroker

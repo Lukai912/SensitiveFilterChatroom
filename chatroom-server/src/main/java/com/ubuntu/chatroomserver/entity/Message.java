@@ -1,10 +1,10 @@
-package cn.huangzijian888.chatroomserver.entity;
+package com.ubuntu.chatroomserver.entity;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author huangzijian888
+ * @author luowendong
  */
 @Data
 public class Message {

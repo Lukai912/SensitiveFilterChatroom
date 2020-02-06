@@ -1,4 +1,4 @@
-package cn.huangzijian888.chatroomserver;
+package com.ubuntu.chatroomserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
