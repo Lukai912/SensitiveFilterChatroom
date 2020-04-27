@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-04-27 21:54:30
- * @LastEditTime: 2020-04-28 00:22:13
+ * @LastEditTime: 2020-04-28 01:34:51
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /frontend/src/main.js
@@ -23,7 +23,7 @@ const routes = [{
     component: Chat
 },{
     path: '/',
-    component: dashboard
+    component: Chat
 },
 {
     path: '/dashboard',
