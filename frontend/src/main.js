@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-04-27 21:54:30
+ * @LastEditTime: 2020-04-28 00:22:13
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /frontend/src/main.js
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui'
@@ -13,6 +21,9 @@ Vue.use(VueRouter);
 const routes = [{
     path: '/chat',
     component: Chat
+},{
+    path: '/',
+    component: dashboard
 },
 {
     path: '/dashboard',

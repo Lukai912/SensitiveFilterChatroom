@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^2.6.11",
     "element-ui": "^2.13.1",
+    "express": "^4.17.1",
     "node-sass": "^4.14.0",
     "sass-loader": "^8.0.2",
     "sockjs-client": "^1.4.0",
