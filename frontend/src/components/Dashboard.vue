@@ -15,6 +15,14 @@
                         <span>2020-4-25</span>
                     </div>
                 </el-card>
+                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                        <div slot="header" class="clearfix">
+                            <span>第一主题：生活</span>
+                        </div>
+                        <div slot="header" class="clearfix">
+                            <span>第二主题：工作</span>
+                        </div>
+                    </el-card>
             </el-col>
             <el-col :span="16">
                 <el-card shadow="hover" style="height:503px;">
