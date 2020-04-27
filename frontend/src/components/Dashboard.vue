@@ -15,16 +15,6 @@
                         <span>2020-4-25</span>
                     </div>
                 </el-card>
-                <el-card shadow="hover" style="height:252px;">
-                    <div slot="header" class="clearfix">
-                        <span>会话主题百分比</span>
-                        <span class="user-info-cont">(提到该分类词的对话/总对话条数)</span>
-                    </div>生活
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>工作
-                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>学习
-                    <el-progress :percentage="13.7"></el-progress>娱乐
-                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>
-                </el-card>
             </el-col>
             <el-col :span="16">
                 <el-card shadow="hover" style="height:503px;">
@@ -51,7 +41,14 @@
             </el-col>
             <el-col :span="12">
                 <el-card shadow="hover">
-                    <schart class="schart" canvasId="canvas" :options="options2"></schart>
+                    <div slot="header" class="clearfix">
+                        <span>会话主题百分比</span>
+                        <span class="user-info-cont">(提到该分类词的对话/总对话条数)</span>
+                    </div>生活
+                    <el-progress :percentage="71.3" color="#42b983"></el-progress>工作
+                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>学习
+                    <el-progress :percentage="13.7"></el-progress>娱乐
+                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>
                 </el-card>
             </el-col>
         </el-row>
