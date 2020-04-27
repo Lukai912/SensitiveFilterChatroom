@@ -2,7 +2,7 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="8">
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                <el-card shadow="hover" class="mgb20" style="height:250px;">
                     <div class="user-info">
                         <img src="../assets/img/img.jpg" class="user-avator" alt />
                         <div class="user-info-cont">
@@ -15,17 +15,23 @@
                         <span>2020-4-25</span>
                     </div>
                 </el-card>
-                <el-card shadow="hover" class="mgb20" style="height:252px;">
+                <el-card shadow="hover" class="mgb20" style="height:200px;">
                         <div slot="header" class="clearfix">
-                            <span>第一主题：生活</span>
+                            <span>会话top主题</span>
                         </div>
-                        <div slot="header" class="clearfix">
-                            <span>第二主题：工作</span>
-                        </div>
+                        <el-table :show-header="false" :data="top_topic" style="width:100%;">
+                            <el-table-column width="40">
+                            </el-table-column>
+                            <el-table-column>
+                                <template slot-scope="scope">
+                                <div>{{scope.row.title}}</div>
+                            </template>
+                            </el-table-column>
+                        </el-table>
                     </el-card>
             </el-col>
             <el-col :span="16">
-                <el-card shadow="hover" style="height:503px;">
+                <el-card shadow="hover" style="height:480px;">
                     <div slot="header" class="clearfix">
                         <span>聊天内容</span>
                     </div>
@@ -71,6 +77,14 @@ export default {
     data() {
         return {
             name: localStorage.getItem('ms_username'),
+            top_topic:[
+                {
+                    title: '第一主题：生活'
+                },
+                {
+                    title: '第二主题：工作'
+                }
+            ],
             todoList: [
                 {
                     title: 'mmm:大家好，今天出来完王者荣耀么？',
