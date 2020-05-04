@@ -1,18 +1,29 @@
 package com.ubuntu.chatroomserver.util;
 
-import java.util.List;
-import java.util.Map;
+import com.ubuntu.chatroomserver.config.WebSocketConfig;
+import com.ubuntu.chatroomserver.entity.AnalysisEntity;
+import com.ubuntu.chatroomserver.entity.Message;
+import com.ubuntu.filter.LifeWordFilter;
+import com.ubuntu.filter.WorkWordFilter;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 /**
  * 过滤辅助类
- * @author Fanhua
+ * @author luowendong
  *
  */
 public class TextUtils {
-	
+	public static ArrayList<Message> history_log = new ArrayList<>();
 	/**
 	 * 过滤
 	 * @param key
@@ -131,7 +142,27 @@ public class TextUtils {
         htmlStr = m_line.replaceAll(""); //过滤html标签 
         return htmlStr.trim(); //返回文本字符串
     }
+	public static void writeDataToFile(String jsonStr) throws IOException {
+		if (WebSocketConfig.room_time == ""){
+			WebSocketConfig.room_time = String.valueOf(System.currentTimeMillis());
+		}
+		//文件目录
+		Path rootLocation = Paths.get("historyLog");
+		if(Files.notExists(rootLocation)){
+			Files.createDirectories(rootLocation);
+		}
 
+		Path path = rootLocation.resolve(WebSocketConfig.room_time);
+		File file = new File(String.valueOf(path.toAbsolutePath()));
+		jsonStr = jsonStr + "\n";
+		byte[] strToBytes = jsonStr.getBytes();
+		if (file.exists()) {
+			Files.write(path, strToBytes, StandardOpenOption.APPEND);
+		} else {
+			Files.write(path, strToBytes);
+		}
+
+	}
 	
 	/**
 	 * 过滤Js标签

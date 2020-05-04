@@ -5,9 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 创建时间：2016年8月30日 下午3:07:45
  * 
- * @author andy
+ * @author luowendong
  * @version 2.2
  */
 public class WordNode {
