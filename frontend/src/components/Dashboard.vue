@@ -50,7 +50,7 @@
         <el-row :gutter="20">
             <el-col :span="12">
                 <el-card shadow="hover">
-                    <schart ref="bar" class="schart" canvasId="bar" :options="options"></schart>
+                    <v-chart  ref="pie" class="schart" canvasId="bar" :options="options" autoresize></v-chart>
                 </el-card>
             </el-col>
             <el-col :span="12">
@@ -70,8 +70,9 @@
 </template>
 
 <script>
-import Schart from 'vue-schart';
+import ECharts from 'vue-echarts';
 import bus from '../assets/bus';
+import 'echarts/lib/chart/pie';
 export default {
     name: 'dashboard',
     data() {
@@ -142,18 +143,44 @@ export default {
                 }
             ],
             options: {
-                type: 'pie',
-                title: {
-                    text: '敏感词分布图'
-                },
-                legend: {
-                    position: 'left'
-                },
-                bgColor: '#fbfbfb',
-                labels: ['政治、民族安全', '邪教', '新闻', '违法词语', '人名', '其他'],
-                datasets: [{
-                    data: [334, 278, 190, 235, 260, 200]
-                }]
+                tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 5,
+                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: true
+                            },
+                            data: [
+                                {value: 335, name: '直接访问'},
+                                {value: 310, name: '邮件营销'},
+                                {value: 234, name: '联盟广告'},
+                                {value: 135, name: '视频广告'},
+                                {value: 1548, name: '搜索引擎'}
+                            ]
+                        }
+                    ]
             },
             options2: {
                 type: 'pie',
@@ -172,7 +199,7 @@ export default {
         };
     },
     components: {
-        Schart
+        'v-chart': ECharts
     },
     computed: {
         role() {
@@ -197,7 +224,17 @@ export default {
                 const date = new Date(now - (6 - index) * 86400000);
                 item.name = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
             });
-        }
+        },
+        getAnalysisData(){
+          this.$http.get({
+              url: '/analysis'
+          }).then(function(res){
+              //请求成功的回调
+              this.options.datasets.labels = res.sensitiveWords
+          },function(err){
+               //请求失败的回调
+          })
+    }
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);
         //     // 调用renderChart方法对图表进行重新渲染
@@ -322,7 +359,7 @@ export default {
     color: #999;
 }
 
-.schart {
+. {
     width: 100%;
     height: 300px;
 }

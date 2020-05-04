@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.11",
+    "echarts": "^4.7.0",
     "element-ui": "^2.13.1",
     "express": "^4.17.1",
     "node-sass": "^4.14.0",
@@ -16,6 +17,7 @@
     "sockjs-client": "^1.4.0",
     "stompjs": "^2.3.3",
     "vue": "^2.6.11",
+    "vue-echarts": "^5.0.0-beta.0",
     "vue-router": "^3.1.6",
     "vue-schart": "^2.0.0"
   },
