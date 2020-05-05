@@ -42,11 +42,13 @@
                         <span>聊天内容</span>
                     </div>
                     <el-table :show-header="false" :data="history_log" style="width:100%;">
+                        <el-scrollbar>
                             <el-table-column>
                                 <template slot-scope="scope">
                                    <div> {{scope.row.name+'：'+scope.row.content}}</div>
                                 </template>
                             </el-table-column>
+                        </el-scrollbar>
                     </el-table>
                 </el-card>
             </el-col>
@@ -241,10 +243,10 @@ export default {
         },
         setTopicPercentage(data){
             const topic_option = [
-                    {value: (data['topic']['life'] / data['topic']['totalNum'])*100, topic: '生活'},
-                    {value: (data['topic']['work']/ data['topic']['totalNum'])*100, topic: '工作'},
-                    {value: (data['topic']['learn']/ data['topic']['totalNum'])*100, topic: '学习'},
-                    {value: (data['topic']['entertainment']/ data['topic']['totalNum'])*100, topic: '娱乐'}
+                    {value: ((data['topic']['life'] / data['topic']['totalNum'])*100).toFixed(2), topic: '生活'},
+                    {value: ((data['topic']['work']/ data['topic']['totalNum'])*100).toFixed(2), topic: '工作'},
+                    {value: ((data['topic']['learn']/ data['topic']['totalNum'])*100).toFixed(2), topic: '学习'},
+                    {value: ((data['topic']['entertainment']/ data['topic']['totalNum'])*100).toFixed(2), topic: '娱乐'}
             ]
             this.topic_percentage = topic_option
         },
