@@ -40,6 +40,14 @@
                 <el-card shadow="hover" style="height:480px;">
                     <div slot="header" class="clearfix">
                         <span>聊天内容</span>
+                        <el-select v-model="selectTopic" @change="selectOne" placeholder="请选择主题">
+                                <el-option
+                                v-for="item in topic_percentage"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                                </el-option>
+                        </el-select>
                     </div>
                     <el-table :show-header="false" :data="history_log" style="width:100%;">
                         <el-scrollbar>
@@ -69,7 +77,7 @@
                         <el-table-column>
                             <template slot-scope="scope">
                                 {{scope.row.topic}}
-                                <el-progress :percentage="scope.row.value" color="#42b983"></el-progress>
+                                <el-progress :percentage="scope.row.value" color="#42b983" @click="selectOne"></el-progress>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -92,16 +100,10 @@ export default {
         return {
             currentRoomInfo: {},
             selectValue: '',
+            selectTopic:'',
             rooms: [],
             name: localStorage.getItem('ms_username'),
-            top_topic:[
-                {
-                    title: '第一主题：生活'
-                },
-                {
-                    title: '第二主题：工作'
-                }
-            ],
+            top_topic:[],
             history_log:[],
             topic_percentage:[],
             todoList: [
@@ -186,7 +188,7 @@ export default {
     },
     mounted() {
         this.mypie = ECharts.init(document.getElementById('mypie'))
-        this.getHistoryLog()
+        // this.getHistoryLog()
         this.getHistoryRoom()
     },
 
@@ -243,11 +245,19 @@ export default {
         },
         setTopicPercentage(data){
             const topic_option = [
-                    {value: ((data['topic']['life'] / data['topic']['totalNum'])*100).toFixed(2), topic: '生活'},
-                    {value: ((data['topic']['work']/ data['topic']['totalNum'])*100).toFixed(2), topic: '工作'},
-                    {value: ((data['topic']['learn']/ data['topic']['totalNum'])*100).toFixed(2), topic: '学习'},
-                    {value: ((data['topic']['entertainment']/ data['topic']['totalNum'])*100).toFixed(2), topic: '娱乐'}
+                    {value: ((data['topic']['life'] / data['topic']['totalNum'])*100).toFixed(2), topic: '生活', label: '生活', count:data['topic']['life']},
+                    {value: ((data['topic']['work']/ data['topic']['totalNum'])*100).toFixed(2), topic: '工作', label: '工作', count:data['topic']['work']},
+                    {value: ((data['topic']['learn']/ data['topic']['totalNum'])*100).toFixed(2), topic: '学习', label: '学习', count:data['topic']['learn']},
+                    {value: ((data['topic']['entertainment']/ data['topic']['totalNum'])*100).toFixed(2), topic: '娱乐', label: '娱乐', count:data['topic']['entertainment']}
             ]
+            function sortId(a, b) {
+                return b.value - a.value;//由高到低
+            }
+            topic_option.sort(sortId);
+            this.top_topic = [
+                {title: "第一主题：" + topic_option[0]['topic'] + "频次：" + topic_option[0]['count']},
+                {title: "第二主题：" + topic_option[1]['topic'] + "频次：" + topic_option[1]['count']}
+                ]
             this.topic_percentage = topic_option
         },
         setPieOptions(data){
