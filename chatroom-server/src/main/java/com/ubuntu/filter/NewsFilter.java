@@ -1,11 +1,15 @@
 package com.ubuntu.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class NewsFilter extends BaseWordFilter {
+    @Autowired
+    public static String name= "不正当竞争";
     public static final NewsFilter NewsFilter_instance = new NewsFilter(
             new BufferedReader(new InputStreamReader(
                     ClassLoader.getSystemResourceAsStream("news"), StandardCharsets.UTF_8)));

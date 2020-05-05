@@ -1,11 +1,15 @@
 package com.ubuntu.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class LearnFilter extends BaseWordFilter {
+    @Autowired
+    public static String name= "学习";
     public static final LearnFilter LearnFilter_instance = new LearnFilter(
             new BufferedReader(new InputStreamReader(
                     ClassLoader.getSystemResourceAsStream("entertainment"), StandardCharsets.UTF_8)));

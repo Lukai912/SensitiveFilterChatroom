@@ -1,12 +1,15 @@
 package com.ubuntu.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class LifeWordFilter extends BaseWordFilter {
-
+    @Autowired
+    public static String name= "生活";
     public static final LifeWordFilter LifeWordFilter_instance = new LifeWordFilter(
             new BufferedReader(new InputStreamReader(
                     ClassLoader.getSystemResourceAsStream("life"), StandardCharsets.UTF_8)));

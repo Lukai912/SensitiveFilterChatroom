@@ -1,11 +1,15 @@
 package com.ubuntu.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class CultSensitiveFilter extends BaseWordFilter {
+    @Autowired
+    public static String name= "邪教";
     public static final CultSensitiveFilter CultSensitiveFilter_instance = new CultSensitiveFilter(
             new BufferedReader(new InputStreamReader(
                     ClassLoader.getSystemResourceAsStream("cult"), StandardCharsets.UTF_8)));

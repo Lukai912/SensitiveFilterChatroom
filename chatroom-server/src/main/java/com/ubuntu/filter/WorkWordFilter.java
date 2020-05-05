@@ -1,11 +1,15 @@
 package com.ubuntu.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class WorkWordFilter extends BaseWordFilter{
+    @Autowired
+    public static String name= "工作";
     public static final WorkWordFilter WorkWordFilter_instance = new WorkWordFilter(
             new BufferedReader(new InputStreamReader(
                     ClassLoader.getSystemResourceAsStream("work"), StandardCharsets.UTF_8)));

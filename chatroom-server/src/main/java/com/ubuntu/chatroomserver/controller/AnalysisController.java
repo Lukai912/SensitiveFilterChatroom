@@ -34,7 +34,7 @@ public class AnalysisController {
         }
         return json;
     }
-    @RequestMapping(value = {"/historyList"},method = RequestMethod.GET)
+            @RequestMapping(value = {"/historyList"},method = RequestMethod.GET)
     public String getHistory(){
         Path rootLocation = Paths.get("historyLog");
         File file = new File(String.valueOf(rootLocation.toAbsolutePath()));
@@ -55,13 +55,20 @@ public class AnalysisController {
         Path path = rootLocation.resolve(log);
         List<String> historyContent = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        String content = "";
+        StringBuilder content = new StringBuilder();
+        content.append("[");
         try {
             historyContent = Files.readAllLines(path);
-            content = mapper.writeValueAsString(historyContent);
+            for (int i =0;i <historyContent.size()-1;i++){
+                content.append(historyContent.get(i));
+                content.append(",");
+            }
+            content.append(historyContent.get(historyContent.size()-1));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return content;
+        content.append("]");
+        System.out.println(content.toString());
+        return content.toString();
     }
 }

@@ -17,6 +17,7 @@ public class AnalysisEntity {
     @Autowired
     public SensitiveWords sensitiveWords;
 
+
     private void topicAys(String contents){
         if(LifeWordFilter.LifeWordFilter_instance.isContains(contents)){
             topic.life++;

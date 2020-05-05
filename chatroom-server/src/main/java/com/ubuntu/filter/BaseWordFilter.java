@@ -26,16 +26,14 @@ public class BaseWordFilter {
      */
     public void addDict(BufferedReader reader){
         try{
-            if(FilterStatus == FilterState.ERROR) {
-                List<String> sensitiveWords = new ArrayList<String>();
-                for(String line = reader.readLine(); line != null; line = reader.readLine()){
-                    sensitiveWords.add(line);
-                }
-                addSensitiveWord(sensitiveWords);
-                addStopWord(StopWordUtils.getStopWord());
-                reader.close();
-                FilterStatus = FilterState.SUCCESS;
+            List<String> sensitiveWords = new ArrayList<String>();
+            for(String line = reader.readLine(); line != null; line = reader.readLine()){
+                sensitiveWords.add(line);
             }
+            addSensitiveWord(sensitiveWords);
+            addStopWord(StopWordUtils.getStopWord());
+            reader.close();
+            FilterStatus = FilterState.SUCCESS;
 
         }catch(IOException e){
             e.printStackTrace();
