@@ -202,7 +202,7 @@ public class BaseWordFilter {
                 continue;
             }
             node = nodes.get(currc);// 日 2
-            if (node == null)// 其实不会发生，习惯性写上了
+            if (node == null)
                 continue;
             boolean couldMark = false;
             if (node.isLast()) {// 单字匹配（日）

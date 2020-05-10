@@ -2,9 +2,11 @@ package com.ubuntu.chatroomserver.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ubuntu.chatroomserver.config.WebSocketConfig;
 import com.ubuntu.chatroomserver.entity.AnalysisEntity;
+import com.ubuntu.filter.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -14,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AnalysisController {
@@ -34,7 +37,7 @@ public class AnalysisController {
         }
         return json;
     }
-            @RequestMapping(value = {"/historyList"},method = RequestMethod.GET)
+    @RequestMapping(value = {"/historyList"},method = RequestMethod.GET)
     public String getHistory(){
         Path rootLocation = Paths.get("historyLog");
         File file = new File(String.valueOf(rootLocation.toAbsolutePath()));
@@ -48,6 +51,48 @@ public class AnalysisController {
         }
 
         return historyList;
+    }
+    @RequestMapping(value = {"/filterTopicByRoom"},method = RequestMethod.GET)
+    public String getClassificationByRoom(@RequestParam ("log")String log, @RequestParam ("topic") String topic) throws JsonProcessingException {
+        BaseWordFilter filter = null;
+        switch (topic){
+            case "entertainment":
+                filter = EntertainmentFilter.EntertainmentFilter_instance;
+                break;
+            case "life":
+                filter = LifeWordFilter.LifeWordFilter_instance;
+                break;
+            case "learn":
+                filter = LearnFilter.LearnFilter_instance;
+                break;
+            case "work":
+                filter = WorkWordFilter.WorkWordFilter_instance;
+                break;
+            default:
+                break;
+        }
+        if(filter == null) {
+            return "[]";
+        }
+        Path rootLocation = Paths.get("historyLog");
+        Path path = rootLocation.resolve(log);
+        List<String> historyContent = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        List<Map> contentList = new ArrayList<>();
+        try {
+            historyContent = Files.readAllLines(path);
+            for (int i =0;i <historyContent.size();i++){
+                Map contnetnMap = mapper.readValue(historyContent.get(i), Map.class);
+                if(filter.isContains((String) contnetnMap.get("content"))) {
+                    contentList.add(contnetnMap);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String ujson = mapper.writeValueAsString(contentList);
+        System.out.println(ujson);
+        return ujson;
     }
     @RequestMapping(value = {"/historyContent"},method = RequestMethod.GET)
     public String getHistoryContent(@RequestParam ("log") String log){

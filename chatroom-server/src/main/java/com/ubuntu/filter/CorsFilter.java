@@ -11,6 +11,7 @@ import java.io.IOException;
 @Component
 @WebFilter(urlPatterns = "/*", filterName = "CorsFilter")
 public class CorsFilter implements Filter {
+//    非文本过滤器是解决跨域（服务请求和网页资源请求不是一个来源的问题）
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;

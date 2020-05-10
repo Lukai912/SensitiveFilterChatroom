@@ -10,7 +10,7 @@
                                 <el-option
                                 v-for="item in rooms"
                                 :key="item.value"
-                                :label="item.label"
+                                :label="item.value"
                                 :value="item.value">
                                 </el-option>
                             </el-select>
@@ -40,23 +40,21 @@
                 <el-card shadow="hover" style="height:480px;">
                     <div slot="header" class="clearfix">
                         <span>聊天内容</span>
-                        <el-select v-model="selectTopic" @change="selectOne" placeholder="请选择主题">
+                        <el-select v-model="selectTopic" @change="selectOneTopic" placeholder="请选择主题">
                                 <el-option
                                 v-for="item in topic_percentage"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
+                                :key="item.topic"
+                                :label="item.topic"
+                                :value="item.label">
                                 </el-option>
                         </el-select>
                     </div>
-                    <el-table :show-header="false" :data="history_log" style="width:100%;">
-                        <el-scrollbar>
-                            <el-table-column>
-                                <template slot-scope="scope">
-                                   <div> {{scope.row.name+'：'+scope.row.content}}</div>
-                                </template>
-                            </el-table-column>
-                        </el-scrollbar>
+                    <el-table :show-header="false" :data="history_log" style="width:100%;" max-height="380">
+                        <el-table-column>
+                            <template slot-scope="scope">
+                                <div> {{scope.row.name+'：'+scope.row.content}}</div>
+                            </template>
+                        </el-table-column>
                     </el-table>
                 </el-card>
             </el-col>
@@ -77,7 +75,7 @@
                         <el-table-column>
                             <template slot-scope="scope">
                                 {{scope.row.topic}}
-                                <el-progress :percentage="scope.row.value" color="#42b983" @click="selectOne"></el-progress>
+                                <el-progress :stroke-width="20" :percentage="scope.row.value" :text-inside="true" color="#42b983" @click="selectOne"></el-progress>
                             </template>
                         </el-table-column>
                     </el-table>
@@ -106,32 +104,6 @@ export default {
             top_topic:[],
             history_log:[],
             topic_percentage:[],
-            todoList: [
-                {
-                    title: 'mmm:大家好，今天出来完王者荣耀么？',
-                    percentage: 70
-                },
-                {
-                    title: 'sss:不了，我要吃饭了',
-                    percentage: 70
-                },
-                {
-                    title: 'kkk:我不饿，今天还要加班',
-                    percentage: 70
-                },
-                {
-                    title: 'sss:最近加班有点累',
-                    percentage: 70
-                },
-                {
-                    title: 'mmm:啊，好吧',
-                    percentage: 70
-                },
-                {
-                    title: 'mmm:大家都去忙工作吧',
-                    percentage: 70
-                }
-            ],
             option : {
                 title: {
                     text: "敏感词类型分布"
@@ -209,6 +181,9 @@ export default {
             this.getHistoryLog()
             this.getHistoryRoom()
         },
+        selectOneTopic(){
+           this.getClassByRoom() 
+        },
         changeDate() {
             const now = new Date().getTime();
             this.data.forEach((item, index) => {
@@ -243,12 +218,18 @@ export default {
                 this.history_log = res.data
             })
         },
+        getClassByRoom(){
+            axios.get("http://localhost:8080//filterTopicByRoom?log="+this.selectValue + "&topic=" + this.selectTopic).then((res) => {
+                console.log(res.data)
+                this.history_log = res.data
+            })
+        },
         setTopicPercentage(data){
             const topic_option = [
-                    {value: ((data['topic']['life'] / data['topic']['totalNum'])*100).toFixed(2), topic: '生活', label: '生活', count:data['topic']['life']},
-                    {value: ((data['topic']['work']/ data['topic']['totalNum'])*100).toFixed(2), topic: '工作', label: '工作', count:data['topic']['work']},
-                    {value: ((data['topic']['learn']/ data['topic']['totalNum'])*100).toFixed(2), topic: '学习', label: '学习', count:data['topic']['learn']},
-                    {value: ((data['topic']['entertainment']/ data['topic']['totalNum'])*100).toFixed(2), topic: '娱乐', label: '娱乐', count:data['topic']['entertainment']}
+                    {value: ((data['topic']['life'] / data['topic']['totalNum'])*100).toFixed(2), topic: '生活', label: 'life', count:data['topic']['life']},
+                    {value: ((data['topic']['work']/ data['topic']['totalNum'])*100).toFixed(2), topic: '工作', label: 'work', count:data['topic']['work']},
+                    {value: ((data['topic']['learn']/ data['topic']['totalNum'])*100).toFixed(2), topic: '学习', label: 'learn', count:data['topic']['learn']},
+                    {value: ((data['topic']['entertainment']/ data['topic']['totalNum'])*100).toFixed(2), topic: '娱乐', label: 'entertainment', count:data['topic']['entertainment']}
             ]
             function sortId(a, b) {
                 return b.value - a.value;//由高到低
