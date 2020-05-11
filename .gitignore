@@ -7,3 +7,4 @@ chatroom-server/src/test
 *.iws
 *.iml
 *.ipr
+frontend/dist/
