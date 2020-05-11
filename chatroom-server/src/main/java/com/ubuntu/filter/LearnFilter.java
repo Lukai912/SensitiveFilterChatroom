@@ -12,7 +12,7 @@ public class LearnFilter extends BaseWordFilter {
     public static String name= "学习";
     public static final LearnFilter LearnFilter_instance = new LearnFilter(
             new BufferedReader(new InputStreamReader(
-                    ClassLoader.getSystemResourceAsStream("entertainment"), StandardCharsets.UTF_8)));
+                    ClassLoader.getSystemResourceAsStream("learn"), StandardCharsets.UTF_8)));
 
     /**
      * 加载一个文件中的词典，并构建filter<br/>
